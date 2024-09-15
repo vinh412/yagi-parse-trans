@@ -1,6 +1,6 @@
 from connectdb import connectdb
-import parse_vietcom
-import parse_viettin
+import parse_vietcom as parse_vietcom
+import parse_viettin as parse_viettin
 
 mydb = connectdb()
 mycursor = mydb.cursor()

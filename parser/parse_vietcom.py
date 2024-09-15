@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 import tabula
 
-reader = PdfReader("thong_tin_ung_ho_qua_tsk_vcb_0011001932418_tu_01_09_den10_09_2024.pdf")
+reader = PdfReader("../data/thong_tin_ung_ho_qua_tsk_vcb_0011001932418_tu_01_09_den10_09_2024.pdf")
 datePattern = r'^\d{2}/\d{2}/\d{4}$'
 
 def isDate(string):

@@ -2,7 +2,7 @@ import tabula
 from datetime import datetime
 
 def parse_all_pages(type = "json"):
-  filename = "Thong-tin-so-tien-ung-ho-qua-so-tai-khoan-VietinBank-CT1111-111602391111-tu-ngay-10-den-12.9.2024.pdf"
+  filename = "../data/Thong-tin-so-tien-ung-ho-qua-so-tai-khoan-VietinBank-CT1111-111602391111-tu-ngay-10-den-12.9.2024.pdf"
   dics = tabula.read_pdf(filename, pages=1, pandas_options={'header': None}, lattice=True, multiple_tables=False, output_format="json", area=[351, 51, 788, 544])
   dics = dics + tabula.read_pdf(filename, pages='2-2009', pandas_options={'header': None}, lattice=True, multiple_tables=False, output_format="json")
   res = []
