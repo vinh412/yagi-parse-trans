@@ -1,7 +1,6 @@
 import React from 'react';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import TransTable from './TransTable';
-import SearchForm from './SearchForm';
+import { Layout, theme, Typography } from 'antd';
+import HomePage from './HomePage';
 const { Header, Content, Footer } = Layout;
 
 const MyLayout = () => {
@@ -12,15 +11,17 @@ const MyLayout = () => {
     <Layout>
       <Header
         style={{
+          background: colorBgContainer,
           position: 'sticky',
           top: 0,
           zIndex: 1,
           width: '100%',
           display: 'flex',
           alignItems: 'center',
+          marginBottom: "24px"
         }}
       >
-        <div className="demo-logo" />
+        <Typography.Title level={2}>Sao kê Yagi</Typography.Title>
       </Header>
       <Content
         style={{
@@ -35,8 +36,7 @@ const MyLayout = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          <SearchForm />
-          <TransTable />
+          <HomePage />
         </div>
       </Content>
       <Footer
