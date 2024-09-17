@@ -10,5 +10,5 @@ import java.time.LocalDate;
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
     Page<Transaction> findAllByDateCreatedBetween(LocalDate from, LocalDate to, Pageable pageable);
     Page<Transaction> findAllByMessageContainingIgnoreCase(String message, Pageable pageable);
-    Page<Transaction> findAllByMessageContainingIgnoreCaseAndDateCreatedBetween(String message, LocalDate from, LocalDate to, Pageable pageable);
+    Page<Transaction> findAllByMessageContainingIgnoreCaseAndDateCreatedGreaterThanEqualAndDateCreatedLessThanEqual(String message, LocalDate from, LocalDate to, Pageable pageable);
 }

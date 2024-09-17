@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "transactions1")
+@Table(name = "transactions3")
 public class Transaction {
     @Id
     @Column(name = "id")
@@ -31,6 +31,4 @@ public class Transaction {
     private File file;
     @Column(name = "page")
     private int page;
-    @Column(length = 1023)
-    private String search;
 }
