@@ -1,6 +1,6 @@
-import React from 'react';
-import { Layout, theme, Typography } from 'antd';
-import HomePage from './HomePage';
+import React from "react";
+import { Layout, theme, Typography } from "antd";
+import HomePage from "./HomePage";
 const { Header, Content, Footer } = Layout;
 
 const MyLayout = () => {
@@ -12,36 +12,27 @@ const MyLayout = () => {
       <Header
         style={{
           background: colorBgContainer,
-          position: 'sticky',
+          position: "sticky",
           top: 0,
           zIndex: 1,
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: "24px"
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          marginBottom: "24px",
         }}
       >
         <Typography.Title level={2}>Sao kê Yagi</Typography.Title>
       </Header>
       <Content
         style={{
-          padding: '0 48px',
+          padding: "0 48px",
         }}
       >
-        <div
-          style={{
-            padding: 24,
-            minHeight: 600,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          <HomePage />
-        </div>
+        <HomePage />
       </Content>
       <Footer
         style={{
-          textAlign: 'center',
+          textAlign: "center",
         }}
       >
         ©{new Date().getFullYear()} Made by vinhdd

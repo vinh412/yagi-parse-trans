@@ -39,6 +39,33 @@ export const accountOptions = [
   { value: "DESC", label: "BAN VAN DONG CUU TRO TRUNG UONG" },
 ];
 
+export const fileColumns = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id"
+  },
+  {
+    title: "Tên file",
+    dataIndex: "filename",
+    key: "filename"
+  },
+  {
+    title: "Tên tài khoản",
+    dataIndex: "accountName",
+    key: "accountName"
+  },
+  {
+    title: "Số tài khoản",
+    dataIndex: "accountNo",
+    key: "accountNo"
+  },
+  {
+    title: "Ngân hàng",
+    dataIndex: "bank",
+    key: "bank"
+  }
+]
 export const tableColumns = [
   {
     title: "Ngày chuyển",

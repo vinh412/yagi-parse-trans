@@ -1,46 +1,70 @@
 import React, { useEffect, useState } from "react";
-import { accountOptions, convertBEtoFE, rowsPerPageOptions, sortByOptions, sortOrderOptions, tableColumns } from "./ultil";
-import { Button, Col, DatePicker, Form, Input, Pagination, Row, Select, Table } from "antd";
+import {
+  accountOptions,
+  convertBEtoFE,
+  fileColumns,
+  rowsPerPageOptions,
+  sortByOptions,
+  sortOrderOptions,
+  tableColumns,
+} from "./ultil";
+import {
+  theme,
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Pagination,
+  Row,
+  Select,
+  Table,
+} from "antd";
 import dayjs from "dayjs";
 
 function HomePage() {
-  const [data, setData] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+  const [data, setData] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState({
     page: 1,
     search: "",
-    dateRange: [
-      dayjs("01-09-2024", 'DD-MM-YYYY'),
-      dayjs(),
-    ],
+    dateRange: [dayjs("01-09-2024", "DD-MM-YYYY"), dayjs()],
     rowsPerPage: 10,
     sortBy: "amount",
     sortOrder: "desc",
-  })
+  });
   const onSubmit = (query) => {
-    setIsLoading(true)
+    setIsLoading(true);
     const { page, search, dateRange, rowsPerPage, sortBy, sortOrder } = query;
     const startDate = dateRange[0].format("YYYY-MM-DD");
     const endDate = dateRange[1].format("YYYY-MM-DD");
     fetch(
       `http://localhost:8081/?page=${page}&search=${search}&startDate=${startDate}&endDate=${endDate}&rowsPerPage=${rowsPerPage}&sortBy=${sortBy}&sortOrder=${sortOrder}`
     )
-    .then((response) => response.json())
-    .then((response) => setData(convertBEtoFE(response)))
-    .finally(() => setIsLoading(false));
+      .then((response) => response.json())
+      .then((response) => setData(convertBEtoFE(response)))
+      .finally(() => setIsLoading(false));
   };
   const onSearchClick = () => {
-    const newQuery = {...query, page: 1}
-    setQuery(newQuery)
-    onSubmit(newQuery)
-  }
+    const newQuery = { ...query, page: 1 };
+    setQuery(newQuery);
+    onSubmit(newQuery);
+  };
   const onPageChange = (page) => {
-    const newQuery = {...query, page}
-    setQuery(newQuery)
-    onSubmit(newQuery)
-  }
+    const newQuery = { ...query, page };
+    setQuery(newQuery);
+    onSubmit(newQuery);
+  };
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
+    fetch("http://localhost:8081/files")
+      .then((response) => response.json())
+      .then((response) => setFiles(response));
+
     fetch("http://localhost:8081")
       .then((response) => response.json())
       .then((response) => setData(convertBEtoFE(response)))
@@ -48,11 +72,30 @@ function HomePage() {
   }, []);
   return (
     <>
-      <div>
+      <div
+        style={{
+          padding: 24,
+          background: colorBgContainer,
+          borderRadius: borderRadiusLG,
+          marginBottom: "24px"
+        }}
+      >
+        <Table columns={fileColumns} dataSource={files} pagination={false} />
+      </div>
+      <div
+        style={{
+          padding: 24,
+          minHeight: 600,
+          background: colorBgContainer,
+          borderRadius: borderRadiusLG,
+        }}
+      >
         <Form
           size="large"
           layout="vertical"
-          onValuesChange={(changedValues) => setQuery({...query, ...changedValues}) }
+          onValuesChange={(changedValues) =>
+            setQuery({ ...query, ...changedValues })
+          }
           onFinish={onSearchClick}
           initialValues={query}
         >
@@ -72,30 +115,22 @@ function HomePage() {
             </Col>
             <Col span={8}>
               <Form.Item label="Số dòng mỗi trang" name="rowsPerPage">
-                <Select
-                  options={rowsPerPageOptions}
-                />
+                <Select options={rowsPerPageOptions} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="Sắp xếp theo" name="sortBy">
-                <Select
-                  options={sortByOptions}
-                />
+                <Select options={sortByOptions} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="Thứ tự" name="sortOrder">
-                <Select
-                  options={sortOrderOptions}
-                />
+                <Select options={sortOrderOptions} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="Tài khoản nhận" name="account">
-                <Select
-                  options={accountOptions}
-                />
+                <Select options={accountOptions} />
               </Form.Item>
             </Col>
             <Col span={24}>
@@ -111,9 +146,23 @@ function HomePage() {
             </Col>
           </Row>
         </Form>
+        <Table
+          columns={tableColumns}
+          dataSource={data.content}
+          pagination={false}
+          loading={isLoading}
+        />
+        {!isLoading && (
+          <Pagination
+            current={query.page}
+            total={data.totalElements}
+            pageSize={data.rowsPerPage}
+            showSizeChanger={false}
+            align="center"
+            onChange={onPageChange}
+          />
+        )}
       </div>
-      <Table columns={tableColumns} dataSource={data.content} pagination={false} loading={isLoading} />
-      {!isLoading && <Pagination current={query.page} total={data.totalElements} pageSize={data.rowsPerPage} showSizeChanger={false} align="center" onChange={onPageChange} />}
     </>
   );
 }
